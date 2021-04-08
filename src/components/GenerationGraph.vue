@@ -1,8 +1,8 @@
 <template>
     <div>
-    <!-- <p>{{nationalCurrentGeneration}}</p> -->
+    <!-- <p>{{generationData}}</p> -->
         <GChart
-            type="BarChart"
+            type="PieChart"
             :data="chartData"
             :options="chartOptions"
         />
@@ -11,35 +11,28 @@
 
 <script>
 export default {
-    name: 'generation-data',
+    name: 'generation-graph',
     props: ['generationData'],
 
     data () {
     return {
       // Array will be automatically processed with visualization.arrayToDataTable function
-      chartData: [['Fuel', 'Percentage']],
+      chartData: this.generationData,
       chartOptions: {
         chart: {
-          title: 'Company Performance',
-          subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+          title: 'National Generation Data',
+          subtitle: 'All energy types and their generation data for today',
         }
       }
     }
   },
   mounted() {
-      this.extractData()
   },
-    methods: {
-        extractData: async function() {
-            const generationData = await this.generationData.generationmix
-            await generationData.forEach(element => console.log(element))
-            console.log(generationData)
-        }
-    }
-
 }
 </script>
 
-<style>
-
+<style scoped>
+GChart{
+  width: 600px;
+}
 </style>
