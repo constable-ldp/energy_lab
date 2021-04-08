@@ -1,19 +1,43 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Energy Lab</h1>
+    <generation-graph :generationData="generationData" />
+
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import GenerationGraph from './components/GenerationGraph.vue'
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    'generation-graph': GenerationGraph,
+  },
+  data(){
+    return {
+      generationData: []
+    }
+  },
+  mounted() {
+    this.getData()
+    
+
+  },
+  methods: {
+    getData: async function () {
+      const response = await fetch(
+        "https://api.carbonintensity.org.uk/generation"
+      );
+      const data = await response.json();
+      const generationData = data.data.generationmix;
+      generationData.forEach(element => console.log(element))
+    },
+    // extractData: function(dataResult) {
+    //         dataResult.forEach(element => console.log(element))
+    //     }
+  },
+};
 </script>
 
 <style>
@@ -21,7 +45,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
   margin-top: 60px;
 }
